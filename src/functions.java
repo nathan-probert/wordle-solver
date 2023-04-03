@@ -76,15 +76,17 @@ public class functions {
     }
 
 
-    public static boolean hasDup(CharSequence checkString) {
-        if (checkString.length() == (checkString.chars().distinct().count())+1) {
-            return false;
+    public static boolean hasDup(CharSequence checkString, boolean needMore) {
+        if (needMore) {
+            if (checkString.length() == (checkString.chars().distinct().count())+1) {
+                return false;
+            }
         }
         return (checkString.length() != (checkString.chars().distinct().count()));
     }
 
 
-    public static String[] combinations (String s) {
+    public static String[] combinations (String s, boolean checkDoubles) {
         String[] combinations = new String[1000];
         int combinationCount = 0;
         char[] letters = s.toCharArray();
@@ -106,7 +108,7 @@ public class functions {
                             String comb = new String(forComb);
                             // check if it has duplicates (otherwise runtime is crazy)
                             // maybe make it check for > 2 dupes? 
-                            if (hasDup(comb)) {
+                            if (hasDup(comb, checkDoubles)) {
                                 copy = true;
                             }
                             else {
@@ -139,8 +141,11 @@ public class functions {
         String[] words = new String [1000];
         int numWords = 0;
         boolean repeat = true;
+
+        // the number of letters to initially look at
         int endIndex = 5;
         boolean ignore = false;
+        boolean checkDoubles = false;
 
         // loop attempts at making a word with most popular first 5, then 6, etc letters
         while (repeat) {
@@ -149,7 +154,7 @@ public class functions {
             for (int i=0; i<possibleWords.length; i++) {
                 String inOrder = new String(letters);
                 String test = inOrder.substring(0, endIndex);
-                String[] temp = combinations(test);
+                String[] temp = combinations(test, checkDoubles);
                 for (String check : possibleWords) {
                     // loop through each diff combination of test
                     for (String t : temp) {
@@ -168,9 +173,20 @@ public class functions {
                     }
                 }
             }
-            if (words[0] == "") {
+
+            if (words[0] == null) {
+                /**
+                if (!checkDoubles) {
+                    checkDoubles = true;
+                }
+                else {
+                    endIndex++;
+                    checkDoubles = false;
+                }
                 repeat=true;
+                **/
                 endIndex++;
+                repeat=true;
             }
         }
 

@@ -32,7 +32,8 @@ public class app {
         int[] numPossibleAnswers = {0};
         String[] possibleAnswers = functions.getDict("possible_answers2.txt", numPossibleAnswers);
 
-        System.out.println();
+        int[] numPrettyCommonWordleWords = {0};
+        String[] prettyCommonWordleWords = functions.getDict("pretty_common_words.txt", numPrettyCommonWordleWords);
 
         // sort letters in order of number of occurances
         char[] sortedLetters = functions.sortLetters(possibleAnswers);
@@ -40,13 +41,44 @@ public class app {
         // loop for each possible guess
         for (int i=0; i<6; i++) {
             String[] possibleWords = functions.makeWords(sortedLetters, possibleAnswers);
+            System.out.println("\nHere are our top guesses:");
             for (String k : possibleWords) {
                 System.out.print(k + " ");
             }
-            System.out.println("\n");
-            
-            long end = System.currentTimeMillis();
 
+            // check within pretty common words
+            i=0;
+            String[] bestWords = new String[1000];
+            System.out.println("\n\nPretty Common Wordle Words:");
+            for (String w : possibleWords) {
+                for (String w2 : prettyCommonWordleWords) {
+                    if (w == w2) {
+                        System.out.print(w + " ");
+                        bestWords[i] = w;
+                        i++;
+                        break;
+                    }
+                }
+            }
+            if (i==0) {
+                for (String w : possibleWords) {
+                    bestWords[i] = w;
+                    i++;
+                }
+            }
+            String[] sizedBestWords = Arrays.copyOf(bestWords, i);
+
+            // now randomly choose one of the most popular guesses
+            Random r = new Random();
+            int randint = r.ints(1, 0, sizedBestWords.length).findFirst().getAsInt();
+			String bestGuess = sizedBestWords[randint];
+            System.out.println("Final Guess: " + bestGuess);
+
+            // ask the user for their guess
+
+
+            // get runtime
+            long end = System.currentTimeMillis();
             NumberFormat formatter = new DecimalFormat("#0.00000");
             System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds");
 
