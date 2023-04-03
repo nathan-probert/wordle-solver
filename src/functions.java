@@ -30,6 +30,10 @@ public class functions {
         int[] lettersInOrder = new int[26];
         char[] lettersToReturn = new char[26];
 
+        Arrays.fill(allLetters, 0);
+        Arrays.fill(unSortedLetters, 0);
+        Arrays.fill(lettersInOrder, 0);
+
         // count each characters appearance
 		for (String word : letters) {
 			for(int i = 0; i < 5; i++){  
