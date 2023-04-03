@@ -85,7 +85,7 @@ public class functions {
 
 
     public static String[] combinations (String s) {
-        String[] combinations = new String[10000];
+        String[] combinations = new String[1000];
         int combinationCount = 0;
         char[] letters = s.toCharArray();
         int[] iLetters = new int[letters.length];
@@ -136,10 +136,11 @@ public class functions {
 
     // creates all possible words
     public static String[] makeWords (char[] letters, String[] possibleWords) {
-        String[] words = {""};
+        String[] words = new String [1000];
         int numWords = 0;
         boolean repeat = true;
         int endIndex = 5;
+        boolean ignore = false;
 
         // loop attempts at making a word with most popular first 5, then 6, etc letters
         while (repeat) {
@@ -153,7 +154,16 @@ public class functions {
                     // loop through each diff combination of test
                     for (String t : temp) {
                         if (isAnagram(t, check)) {
-                            words[numWords] = check;
+                            for (String w : words) {
+                                if (w == check) {
+                                    ignore = true;
+                                }
+                            }
+                            if (!ignore) {
+                                words[numWords] = check;
+                                numWords++;
+                            }
+                            ignore = false;
                         }
                     }
                 }
@@ -164,6 +174,8 @@ public class functions {
             }
         }
 
-        return words;
+        String[] properSizeWords = Arrays.copyOf(words, numWords);
+
+        return properSizeWords;
     }
 }

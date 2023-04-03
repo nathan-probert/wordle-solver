@@ -32,6 +32,8 @@ public class app {
         int[] numPossibleAnswers = {0};
         String[] possibleAnswers = functions.getDict("possible_answers2.txt", numPossibleAnswers);
 
+        System.out.println();
+
         // sort letters in order of number of occurances
         char[] sortedLetters = functions.sortLetters(possibleAnswers);
 
@@ -39,8 +41,9 @@ public class app {
         for (int i=0; i<6; i++) {
             String[] possibleWords = functions.makeWords(sortedLetters, possibleAnswers);
             for (String k : possibleWords) {
-                System.out.println(k);
+                System.out.print(k + " ");
             }
+            System.out.println("\n");
             
             long end = System.currentTimeMillis();
 
