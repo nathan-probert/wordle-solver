@@ -62,6 +62,7 @@ public class functions {
             lettersToReturn[i] = ((char) (lettersInOrder[i]+97));
         }
 
+        lettersToReturn = Arrays.copyOf(lettersToReturn, allLetters.length);
         return lettersToReturn;
     }
 
@@ -151,25 +152,24 @@ public class functions {
         while (repeat) {
             repeat=false;
             // take the chars, compare to each string in dict by sorting the two strings the same way
-            for (int i=0; i<possibleWords.length; i++) {
-                String inOrder = new String(letters);
-                String test = inOrder.substring(0, endIndex);
-                String[] temp = combinations(test, checkDoubles);
-                for (String check : possibleWords) {
-                    // loop through each diff combination of test
-                    for (String t : temp) {
-                        if (isAnagram(t, check)) {
-                            for (String w : words) {
-                                if (w == check) {
-                                    ignore = true;
-                                }
+            String inOrder = new String(letters);
+            String test = inOrder.substring(0, endIndex);
+            String[] temp = combinations(test, checkDoubles);
+            
+            for (String check : possibleWords) {
+                // loop through each diff combination of test
+                for (String t : temp) {
+                    if (isAnagram(t, check)) {
+                        for (String w : words) {
+                            if (w == check) {
+                                ignore = true;
                             }
-                            if (!ignore) {
-                                words[numWords] = check;
-                                numWords++;
-                            }
-                            ignore = false;
                         }
+                        if (!ignore) {
+                            words[numWords] = check;
+                            numWords++;
+                        }
+                        ignore = false;
                     }
                 }
             }
@@ -193,5 +193,55 @@ public class functions {
         String[] properSizeWords = Arrays.copyOf(words, numWords);
 
         return properSizeWords;
+    }
+
+
+    public static String[] green (String[] dict, char letter) {
+        String[] newDict = new String[dict.length];
+        int i=0;
+
+        for (String s : dict) {
+            if (s.contains(""+letter)) {
+                newDict[i] = s;
+                i++;
+            }
+        }
+
+        newDict = Arrays.copyOf(newDict, i);
+        return newDict;
+    }
+
+
+    public static String[] black (String[] dict, char letter) {
+        String[] newDict = new String[dict.length];
+        int i=0;
+
+        for (String s : dict) {
+            if (!(s.contains(""+letter))) {
+                newDict[i] = s;
+                i++;
+            }
+        }
+
+        newDict = Arrays.copyOf(newDict, i);
+        return newDict;
+    }
+
+
+    public static String[] yellow (String[] dict, char letter, int position) {
+        String[] newDict = new String[dict.length];
+        int i=0;
+
+        for (String s : dict) {
+            if (s.contains(""+letter)) {
+                if (s.charAt(position) != letter) {
+                    newDict[i] = s;
+                    i++;
+                }
+            }
+        }
+
+        newDict = Arrays.copyOf(newDict, i);
+        return newDict;
     }
 }

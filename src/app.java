@@ -35,12 +35,17 @@ public class app {
         int[] numPrettyCommonWordleWords = {0};
         String[] prettyCommonWordleWords = functions.getDict("pretty_common_words.txt", numPrettyCommonWordleWords);
 
-        // sort letters in order of number of occurances
-        char[] sortedLetters = functions.sortLetters(possibleAnswers);
+        String[] dictionary = possibleAnswers;
 
         // loop for each possible guess
         for (int i=0; i<6; i++) {
-            String[] possibleWords = functions.makeWords(sortedLetters, possibleAnswers);
+            // sort letters in order of number of occurances
+            char[] sortedLetters = functions.sortLetters(dictionary);
+            for (char l : sortedLetters) {
+                System.out.println(l);
+            }
+
+            String[] possibleWords = functions.makeWords(sortedLetters, dictionary);
             System.out.println("\nHere are our top guesses:");
             for (String k : possibleWords) {
                 System.out.print(k + " ");
@@ -75,14 +80,41 @@ public class app {
             System.out.println("Final Guess: " + bestGuess);
 
             // ask the user for their guess
+            System.out.print("\nPlease enter your guess (Enter 0 to use suggested guess): ");
+			String guess = stdin.readLine();
+            if (guess.equals("0")) {
+                guess = bestGuess;
+            }
+            System.out.println(guess);
 
-
-            // get runtime
-            long end = System.currentTimeMillis();
-            NumberFormat formatter = new DecimalFormat("#0.00000");
-            System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds");
-
-            System.exit(0);
+            String temp;
+			for (int l=0; l<5; l++) {
+				System.out.print("Was the letter " + guess.charAt(l) + " green (g), yellow (y), or black (b): ");
+				temp = stdin.readLine();
+				if (temp.equalsIgnoreCase("y") | temp.equalsIgnoreCase("g") | temp.equalsIgnoreCase("b")) {
+					if (temp.equals("g")) {
+						dictionary = functions.green(dictionary, guess.charAt(l));
+					}
+					if (temp.equals("y")) {
+						dictionary = functions.yellow(dictionary, guess.charAt(l), l);
+					}
+					if (temp.equals("b")) {
+						dictionary = functions.black(dictionary, guess.charAt(l));
+					}
+				}
+				else {
+					System.out.println("fold");
+				}
+            }
+            System.out.println("Number of possible words remaining: " + dictionary.length);
+            for (String s : dictionary) {
+                System.out.println(s);
+            }
         }
+
+        // get runtime
+        long end = System.currentTimeMillis();
+        NumberFormat formatter = new DecimalFormat("#0.00000");
+        System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds");
     }
 }
