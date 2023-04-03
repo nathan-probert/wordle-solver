@@ -19,7 +19,7 @@ public class app {
         BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
         Scanner wordleWords = new Scanner(new File("wordle-solver\\lib\\wordle_words2.txt"));
         Scanner commonWordleWords = new Scanner(new File("wordle-solver\\lib\\common_wordle_words.txt"));
-        Scanner possibleAnswers = new Scanner(new File("wordle-solver\\lib\\possible_answers.txt"));
+        Scanner possibleAnswers = new Scanner(new File("wordle-solver\\lib\\possible_answers2.txt"));
 
         // gets the entire file called wordle_words.txt and reads it into a dictionary
         int numWordleWords = 0;
@@ -44,18 +44,15 @@ public class app {
 		System.out.println("There are " + numCommonWordleWords + " words in the common dictionary.");
 
 		// gets the entire file called possible_answers and reads it into a dictionary
-		List<String> temps2 = new ArrayList<String>();
-
-		// while loop
-		String token2;
-		while (inFile2.hasNext()) {
-			// find next line
-			token2 = inFile2.next();
-			temps2.add(token2);
+        int numPossibleAnswers=0;
+        temps.clear();
+		while (possibleAnswers.hasNextLine()) {
+			temps.add(possibleAnswers.nextLine());
+            numPossibleAnswers++;
 		}
-		inFile2.close();
+		possibleAnswers.close();
+        String[] possibleAnswersDict = temps.toArray(new String[0]);
+		System.out.println("There are " + numPossibleAnswers + " words in the common dictionary.");
 
-
-		String[] PrettyCommonDictionary = temps2.toArray(new String[0]);
     }
 }
