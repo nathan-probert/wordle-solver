@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,15 +65,103 @@ public class functions {
         return lettersToReturn;
     }
 
+
+    public static boolean isAnagram(String s1, String s2) {
+        char[] c1 = s1.toCharArray();
+        char[] c2 = s2.toCharArray();
+        Arrays.sort(c1);
+        Arrays.sort(c2);
+
+        return (Arrays.equals(c1, c2));
+    }
+
+
+    public static boolean hasDup(CharSequence checkString) {
+        if (checkString.length() == (checkString.chars().distinct().count())+1) {
+            return false;
+        }
+        return (checkString.length() != (checkString.chars().distinct().count()));
+    }
+
+
+    public static String[] combinations (String s) {
+        String[] combinations = new String[10000];
+        int combinationCount = 0;
+        char[] letters = s.toCharArray();
+        int[] iLetters = new int[letters.length];
+        char[] temp = new char[5];
+        boolean copy = false;
+
+        for (int i = 0; i < letters.length; i++){
+            iLetters[i] = letters[i] - '0';
+        }
+
+        temp = s.substring(0,s.length()).toCharArray();
+        for (int i=0; i<s.length(); i++) {
+            for (int j=0; j<s.length(); j++) {
+                for (int k=0; k<s.length(); k++) {
+                    for (int l=0; l<s.length(); l++) {
+                        for (int m=0; m<s.length(); m++) {
+                            char[] forComb = {temp[i], temp[j], temp[k], temp[l], temp[m]};
+                            String comb = new String(forComb);
+                            // check if it has duplicates (otherwise runtime is crazy)
+                            // maybe make it check for > 2 dupes? 
+                            if (hasDup(comb)) {
+                                copy = true;
+                            }
+                            else {
+                                for (int o=0; o<combinationCount; o++) {
+                                    // compare to old combinations
+                                    if (isAnagram(combinations[o], comb)) {
+                                        copy = true;
+                                    }
+                                }
+                            }
+                            if ((copy==false) && (comb!=null)) {
+                                combinations[combinationCount] = comb;
+                                combinationCount++;
+                            }
+                            copy = false;
+                        }
+                    }
+                }
+            }
+        }  
+
+        String[] properSizeCombinations = Arrays.copyOf(combinations, combinationCount);
+
+        return properSizeCombinations;
+    }
+
+
     // creates all possible words
     public static String[] makeWords (char[] letters, String[] possibleWords) {
         String[] words = {""};
+        int numWords = 0;
+        boolean repeat = true;
+        int endIndex = 5;
 
         // loop attempts at making a word with most popular first 5, then 6, etc letters
+        while (repeat) {
+            repeat=false;
             // take the chars, compare to each string in dict by sorting the two strings the same way
-        for (int i=0; i<possibleWords.length; i++) {
-            String inOrder = new String(letters);
-            String test = inOrder.substring(0, 5);
+            for (int i=0; i<possibleWords.length; i++) {
+                String inOrder = new String(letters);
+                String test = inOrder.substring(0, endIndex);
+                String[] temp = combinations(test);
+                for (String check : possibleWords) {
+                    // loop through each diff combination of test
+                    for (String t : temp) {
+                        if (isAnagram(t, check)) {
+                            words[numWords] = check;
+                        }
+                    }
+                }
+            }
+            if (words[0] == "") {
+                repeat=true;
+                endIndex++;
+            }
         }
 
         return words;
