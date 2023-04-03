@@ -26,5 +26,13 @@ public class app {
 
         int[] numPossibleAnswers = {0};
         String[] possibleAnswers = functions.getDict("possible_answers2.txt", numPossibleAnswers);
+
+        // sort letters in order of number of occurances
+        char[] sortedLetters = functions.sortLetters(possibleAnswers);
+
+        // loop for each possible guess
+        for (int i=0; i<6; i++) {
+            String[] possibleWords = functions.makeWords(sortedLetters, possibleAnswers);
+        }
     }
 }
