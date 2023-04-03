@@ -101,7 +101,7 @@ public class functions {
 
 
     public static String[] combinations (String s, boolean checkDoubles) {
-        String[] combinations = new String[1000];
+        String[] combinations = new String[5000];
         int combinationCount = 0;
         char[] letters = s.toCharArray();
         int[] iLetters = new int[letters.length];
