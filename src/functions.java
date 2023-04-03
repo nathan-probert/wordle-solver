@@ -23,6 +23,15 @@ public class functions {
         return allWords;
     }
 
+
+    public static boolean elementOf (int[] array, int i) {
+        for (int a : array) {
+            if (a == i) {
+                return true;
+            }
+        }
+        return false;
+    }
     // sorts the letters in order of number of occurances
     public static char[] sortLetters (String[] letters) {
 		int[] allLetters = new int[26];
@@ -42,6 +51,10 @@ public class functions {
 			}
 		}
 
+        for (int i : allLetters) {
+            System.out.println(i);
+        }
+
         // sort the letters
         for (int i=0; i<26; i++) {
             for (int j=i; j<26; j++) {
@@ -52,11 +65,13 @@ public class functions {
                 }
             }
         }
-
+        for (int i : allLetters) {
+            System.out.println(i);
+        }
         // sort positions of letters
         for (int i=0; i<26; i++) {
-            for (int j=0; j<26; j++) {
-                if (allLetters[i] == unSortedLetters[j]) {
+            for (int j=i; j<26; j++) {
+                if ((allLetters[i] == unSortedLetters[j]) && (!elementOf(lettersInOrder, j))) {
                     lettersInOrder[i] = j;
                 }
             }
