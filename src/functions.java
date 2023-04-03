@@ -51,10 +51,6 @@ public class functions {
 			}
 		}
 
-        for (int i : allLetters) {
-            System.out.println(i);
-        }
-
         // sort the letters
         for (int i=0; i<26; i++) {
             for (int j=i; j<26; j++) {
@@ -65,9 +61,7 @@ public class functions {
                 }
             }
         }
-        for (int i : allLetters) {
-            System.out.println(i);
-        }
+
         // sort positions of letters
         for (int i=0; i<26; i++) {
             for (int j=i; j<26; j++) {
@@ -215,14 +209,16 @@ public class functions {
     }
 
 
-    public static String[] green (String[] dict, char letter) {
+    public static String[] green (String[] dict, char letter, int position) {
         String[] newDict = new String[dict.length];
         int i=0;
 
         for (String s : dict) {
             if (s.contains(""+letter)) {
-                newDict[i] = s;
-                i++;
+                if (s.charAt(position) == letter) {
+                    newDict[i] = s;
+                    i++;
+                }
             }
         }
 

@@ -41,9 +41,6 @@ public class app {
         for (int i=0; i<6; i++) {
             // sort letters in order of number of occurances
             char[] sortedLetters = functions.sortLetters(dictionary);
-            for (char l : sortedLetters) {
-                System.out.println(l);
-            }
 
             String[] possibleWords = functions.makeWords(sortedLetters, dictionary);
             System.out.println("\nHere are our top guesses:");
@@ -85,7 +82,6 @@ public class app {
             if (guess.equals("0")) {
                 guess = bestGuess;
             }
-            System.out.println(guess);
 
             String temp;
 			for (int l=0; l<5; l++) {
@@ -93,7 +89,7 @@ public class app {
 				temp = stdin.readLine();
 				if (temp.equalsIgnoreCase("y") | temp.equalsIgnoreCase("g") | temp.equalsIgnoreCase("b")) {
 					if (temp.equals("g")) {
-						dictionary = functions.green(dictionary, guess.charAt(l));
+						dictionary = functions.green(dictionary, guess.charAt(l), l);
 					}
 					if (temp.equals("y")) {
 						dictionary = functions.yellow(dictionary, guess.charAt(l), l);
@@ -107,10 +103,13 @@ public class app {
 				}
             }
             System.out.println("Number of possible words remaining: " + dictionary.length);
-            for (String s : dictionary) {
-                System.out.println(s);
+
+            if (dictionary.length <= 1) {
+                break;
             }
         }
+
+        System.out.println("\nCongratulations!\nThe answer is " + dictionary[0]);
 
         // get runtime
         long end = System.currentTimeMillis();
