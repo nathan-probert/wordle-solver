@@ -1,5 +1,7 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +11,8 @@ public class functions {
 
     // gets the entire file and reads it into a dictionary
     public static String[] getDict (String filename, int[] numWords) throws IOException {
-        Scanner myFile = new Scanner(new File(System.getProperty("user.dir") + "\\lib\\" + filename));
+        File myFileObj = new File("..\\lib\\" +filename);
+        Scanner myFile = new Scanner(myFileObj);
 
         List<String> temps = new ArrayList<String>();
         while (myFile.hasNextLine()) {
