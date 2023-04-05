@@ -93,6 +93,14 @@ public class app {
             }
             System.out.println("Number of possible words remaining: " + dictionary.length);
 
+            // print all possible words if less than ten remain
+            if ((dictionary.length <= 10) && (dictionary.length != 0)) {
+                for (String k : dictionary) {
+                    System.out.print(k + " ");
+                }
+                System.out.println();
+            }
+
             if (dictionary.length <= 1) {
                 break;
             }
