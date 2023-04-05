@@ -9,7 +9,7 @@ public class functions {
 
     // gets the entire file and reads it into a dictionary
     public static String[] getDict (String filename, int[] numWords) throws IOException {
-        Scanner myFile = new Scanner(new File("wordle-solver\\lib\\" + filename));
+        Scanner myFile = new Scanner(new File(System.getProperty("user.dir") + "\\lib\\" + filename));
 
         List<String> temps = new ArrayList<String>();
         while (myFile.hasNextLine()) {
