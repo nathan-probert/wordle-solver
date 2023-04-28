@@ -9,7 +9,7 @@ public class functions {
 
     // gets the entire file and reads it into a dictionary
     public static String[] getDict (String filename, int[] numWords) throws IOException {
-        File myFileObj = new File("..\\lib\\" +filename);
+        File myFileObj = new File("lib\\" +filename);
         Scanner myFile = new Scanner(myFileObj);
 
         List<String> temps = new ArrayList<String>();
