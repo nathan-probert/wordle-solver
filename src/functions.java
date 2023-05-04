@@ -11,7 +11,6 @@ public class functions {
     public static String[] getDict (String filename, int[] numWords) throws IOException {
         File myFileObj = new File("lib\\" +filename);
         Scanner myFile = new Scanner(myFileObj);
-
         List<String> temps = new ArrayList<String>();
         while (myFile.hasNextLine()) {
             temps.add(myFile.nextLine());
