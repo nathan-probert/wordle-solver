@@ -1,4 +1,4 @@
-package newsrc;
+package src;
 
 public class NoPossibleWords extends Exception {
     public NoPossibleWords() {
