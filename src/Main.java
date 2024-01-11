@@ -37,7 +37,7 @@ public class Main {
             while (true) {
                 int possible = words.countPossible();
                 if (possible == 0) {
-                    System.out.println("\nNo such word exists.\n");
+                    System.out.println("No such word exists.\n");
                     break;
                 } else if (possible == 1) {
                     System.out.println("Congratulations! The only possible word is '" + words.generateGuess() + "'!\n");

@@ -141,6 +141,7 @@ public class Words extends ArrayList<String> {
 
             index++;
         }
+        System.out.println();
     }
 
     private void green(char letter, int index) {
