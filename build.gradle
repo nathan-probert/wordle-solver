@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+compileJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['app']
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'app.Main'
+    }
+    archiveBaseName = 'wordleSolver'
+}
+
+task echo;
+echo.doFirst {
+    println "To run the program from jar:\njava -jar build/libs/wordleSolver.jar"
+}

@@ -1,4 +1,4 @@
-package src;
+package app;
 
 public class NoPossibleWords extends Exception {
     public NoPossibleWords() {
