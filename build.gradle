@@ -12,6 +12,9 @@ sourceSets {
         java {
             srcDirs = ['app']
         }
+        resources {
+            srcDirs = ['lib']
+        }
     }
 }
 

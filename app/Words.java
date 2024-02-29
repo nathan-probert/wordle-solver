@@ -1,14 +1,16 @@
 package app;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
+import java.util.Iterator;
 
 public class Words extends ArrayList<String> {
 
@@ -21,7 +23,10 @@ public class Words extends ArrayList<String> {
     }
 
     private void getDictionary(String filename) throws IOException {
-        Scanner sc = new Scanner(new FileReader(filename));
+
+        InputStream is = Words.class.getClassLoader().getResourceAsStream("possible_answers.txt");
+
+        Scanner sc = new Scanner(is);
         while (sc.hasNextLine()) {
             this.add(sc.nextLine());
         }
@@ -56,9 +61,21 @@ public class Words extends ArrayList<String> {
         ArrayList<String> guesses = new ArrayList<>();
         for (int index = 5; index <= 26; index++) {
             String inOrder = getStringRepresentation(popularLetters);
-            String anagram = inOrder.substring(0, index);
+            
+            String anagram;
+            if (inOrder.length() < 5) {
+                anagram = inOrder.substring(0, inOrder.length());
+            } else {
+                anagram = inOrder.substring(0, index);
+            }
 
-            Permutations perm = new Permutations(anagram.toCharArray(), 5, false);
+            Permutations perm;
+            if (anagram.length() < 5) {
+                perm = new Permutations(anagram.toCharArray(), 5, true);
+            } else {
+                perm = new Permutations(anagram.toCharArray(), 5, false);
+            }            
+
             ArrayList<String> res = perm.permute();
             for (String temp : res) {
                 if (this.contains(temp)) {
@@ -70,8 +87,34 @@ public class Words extends ArrayList<String> {
 
             if (!guesses.isEmpty()) {
                 // get final choice
-                Random rand = new Random();
-                guess = guesses.get(rand.nextInt(guesses.size()));
+
+                // check for common words
+                ArrayList<String> comWords = new ArrayList<>();
+                InputStream is = Words.class.getClassLoader().getResourceAsStream("pretty_common_words.txt");
+
+                Scanner sc = new Scanner(is);
+                while (sc.hasNextLine()) {
+                    comWords.add(sc.nextLine());
+                }
+                sc.close();
+
+                Iterator<String> iterator = comWords.iterator();
+                while (iterator.hasNext()) {
+                    String w = iterator.next();
+                    if (!guesses.contains(w)) {
+                        iterator.remove();
+                    } else {
+                        System.out.println(w);
+                    }
+                }
+                
+                if (comWords.size() > 0) {
+                    Random rand = new Random();
+                    guess = comWords.get(rand.nextInt(comWords.size()));    
+                } else {
+                    Random rand = new Random();
+                    guess = guesses.get(rand.nextInt(guesses.size()));    
+                }
 
                 break;
             }

@@ -18,7 +18,7 @@ public class Main {
         // get all possible answers
         Words words;
         try {
-            words = new Words("lib\\possible_answers.txt");
+            words = new Words("possible_answers.txt");
             System.out.println("Successfully loaded dictionary, " + words.size() + " words found.");
 
             gameOn(words);
