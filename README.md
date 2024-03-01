@@ -14,5 +14,5 @@ Running the `wordle-solver` program is straightforward. Follow these steps:
 3. First compile the program using: (skip this step if you are downloading the .jar release file)<br/>
 ```gradle build```<br/><br/>
 4. Execute the jar using: (Use absolute path if you downloaded the release version)<br/>
-```java -jar build/libs/wordleSolver.jar``` : This is necessary as there is no gui component, double-clicking the jar file will not properly open it.<br/><br/>
+```java -jar build/libs/wordleSolver.jar```<br/>This is necessary as there is no gui component, double-clicking the jar file will not properly open it.<br/><br/>
 3. Follow the prompts in the terminal to use the program.
